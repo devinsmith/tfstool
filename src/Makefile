@@ -3,7 +3,7 @@
 .PHONY: all clean
 
 SRCS = configuration/configuration.cpp configuration/ini.cpp main.cpp \
-			 utils/filesys.cpp
+			 utils/filesys.cpp utils/logging.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
