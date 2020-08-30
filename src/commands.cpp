@@ -19,52 +19,45 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
+#include <cstring>
+
 #include "commands.h"
-#include "configuration/configuration.h"
-#include "services/http.h"
-#include "utils/filesys.h"
-#include "utils/logging.h"
 
-static const char *_pname = "tf";
-
-// Global configuration
-Configuration AppConfig;
-
-static void usage(int err)
+static void cmd_get(const std::vector<std::string>& args)
 {
-  if (err) {
-    fprintf(stderr, "Unknown command\n");
-  }
-
-  fprintf(stderr, "usage: %s (cmd)\n", _pname);
-  fprintf(stderr, "\tget      - get latest.\n");
-  fprintf(stderr, "\tget [#]  - get specific changeset number.\n");
-  exit(err);
+  printf("invoked get\n");
 }
 
-int main(int argc, char *argv[])
+struct cmd_operation {
+  const char *name;
+  void (*operation)(const std::vector<std::string>& args);
+};
+
+cmd_operation operations[] = {
+  { "get", cmd_get },
+  { nullptr, nullptr }
+};
+
+bool execute_cmd(const char *cmd, char *argv[], int num_args)
 {
-  int rc = AppConfig.Load(utils::get_config_path(".tfsrc"));
-  if (rc == -1) {
-    fprintf(stderr, "This program requires a configuration file. Please refer "
-        "to the documentation on how to create a configuration file.\n");
-    exit(1);
-  } else if (rc == -2) {
-    exit(1);
+  cmd_operation *p = operations;
+
+  while (p->name != nullptr) {
+    if (strcmp(cmd, p->name) == 0) {
+      break;
+    }
+    p++;
   }
 
-  if (argc < 2) {
-    usage(0);
+  if (p->operation == nullptr) {
+    return false;
   }
 
-  log_init();
-  http::http_lib_startup();
-
-  if (!execute_cmd(argv[1], &argv[2], argc - 2)) {
-    usage(1);
+  // Convert C style args to vector;
+  std::vector<std::string> args;
+  for (int i = 0; i < num_args; i++) {
+    args.push_back(argv[i]);
   }
-
-  http::http_lib_shutdown();
-
-  return 0;
+  p->operation(args);
+  return true;
 }
