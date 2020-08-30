@@ -1,0 +1,7 @@
+; Configuration for tfstool
+
+[tfs]
+base_url=https://my-tfs-server.com/tfs/OptionalPath
+username=DOMAIN\username
+password=MySecurePassword
+

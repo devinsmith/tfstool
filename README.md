@@ -12,13 +12,24 @@ non-Microsoft systems.
 Building
 --------
 
-Unknown at this point.
+```
+cd src; make.
+```
 
 Configuration
 -------------
 
-Your TFS server, username, and password should be placed in a ~/.tfstoolrc
+Your TFS server, username, and password should be placed in a ~/.tfsrc
 file.
+
+```ini
+; Configuration for tfstool
+
+[tfs]
+base_url=https://my-tfs-server.com/tfs/OptionalPath
+username=DOMAIN\username
+password=MySecurePassword
+```
 
 License
 -------
