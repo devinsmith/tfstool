@@ -20,7 +20,9 @@
 //
 
 #include "configuration/configuration.h"
+#include "services/http.h"
 #include "utils/filesys.h"
+#include "utils/logging.h"
 
 static const char *_pname = "tf";
 
@@ -54,11 +56,16 @@ int main(int argc, char *argv[])
     usage(0);
   }
 
+  log_init();
+  http::http_lib_startup();
+
   printf("Command: %s", argv[1]);
   for (int i = 2; i < argc; i++) {
     printf(" %s", argv[i]);
   }
   printf("\n");
+
+  http::http_lib_shutdown();
 
   return 0;
 }
