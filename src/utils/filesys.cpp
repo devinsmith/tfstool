@@ -19,46 +19,32 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-#include "configuration/configuration.h"
+#include <pwd.h>
+#include <unistd.h>
+#include <sys/types.h>
+
 #include "utils/filesys.h"
 
-static const char *_pname = "tf";
+namespace utils {
 
-// Global configuration
-Configuration AppConfig;
+static const char PATH_SEPERATOR = '/';
 
-static void usage(int err)
+std::string get_home_directory()
 {
-  if (err) {
-    fprintf(stderr, "Unknown command\n");
-  }
+  passwd* pw = getpwuid(getuid());
+  if (pw == nullptr || pw->pw_dir == nullptr)
+    return ""; // exception?
 
-  fprintf(stderr, "usage: %s (cmd)\n", _pname);
-  fprintf(stderr, "\tget      - get latest.\n");
-  fprintf(stderr, "\tget [#]  - get specific changeset number.\n");
-  exit(err);
+  return pw->pw_dir;
 }
 
-int main(int argc, char *argv[])
+std::string get_config_path(const char *fname)
 {
-  int rc = AppConfig.Load(utils::get_config_path(".tfsrc"));
-  if (rc == -1) {
-    fprintf(stderr, "This program requires a configuration file. Please refer "
-        "to the documentation on how to create a configuration file.\n");
-    exit(1);
-  } else if (rc == -2) {
-    exit(1);
-  }
-
-  if (argc < 2) {
-    usage(0);
-  }
-
-  printf("Command: %s", argv[1]);
-  for (int i = 2; i < argc; i++) {
-    printf(" %s", argv[i]);
-  }
-  printf("\n");
-
-  return 0;
+  std::string home_path = get_home_directory();
+  if (!home_path.empty() && home_path.back() != PATH_SEPERATOR)
+    home_path += PATH_SEPERATOR;
+  return home_path + fname;
 }
+
+} // namespace utils
+

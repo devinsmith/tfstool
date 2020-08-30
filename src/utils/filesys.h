@@ -19,46 +19,16 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-#include "configuration/configuration.h"
-#include "utils/filesys.h"
+#ifndef UTILS_FILESYS_INCLUDED
+#define UTILS_FILESYS_INCLUDED
 
-static const char *_pname = "tf";
+#include <string>
 
-// Global configuration
-Configuration AppConfig;
+namespace utils {
 
-static void usage(int err)
-{
-  if (err) {
-    fprintf(stderr, "Unknown command\n");
-  }
+std::string get_home_directory();
+std::string get_config_path(const char *fname);
 
-  fprintf(stderr, "usage: %s (cmd)\n", _pname);
-  fprintf(stderr, "\tget      - get latest.\n");
-  fprintf(stderr, "\tget [#]  - get specific changeset number.\n");
-  exit(err);
-}
+};
 
-int main(int argc, char *argv[])
-{
-  int rc = AppConfig.Load(utils::get_config_path(".tfsrc"));
-  if (rc == -1) {
-    fprintf(stderr, "This program requires a configuration file. Please refer "
-        "to the documentation on how to create a configuration file.\n");
-    exit(1);
-  } else if (rc == -2) {
-    exit(1);
-  }
-
-  if (argc < 2) {
-    usage(0);
-  }
-
-  printf("Command: %s", argv[1]);
-  for (int i = 2; i < argc; i++) {
-    printf(" %s", argv[i]);
-  }
-  printf("\n");
-
-  return 0;
-}
+#endif // UTILS_FILESYS_INCLUDED
