@@ -4,7 +4,7 @@
 
 SRCS = configuration/configuration.cpp configuration/ini.cpp commands.cpp \
 			 main.cpp services/http.cpp \
-			 utils/filesys.cpp utils/logging.cpp
+			 utils/cJSON.cpp utils/filesys.cpp utils/logging.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
