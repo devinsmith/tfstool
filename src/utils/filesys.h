@@ -29,6 +29,6 @@ namespace utils {
 std::string get_home_directory();
 std::string get_config_path(const char *fname);
 
-};
+}
 
 #endif // UTILS_FILESYS_INCLUDED
