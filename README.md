@@ -26,7 +26,8 @@ file.
 ; Configuration for tfstool
 
 [tfs]
-base_url=https://my-tfs-server.com/tfs/OptionalPath
+base_url=https://my-tfs-server.com/tfs/Organization
+default_project=MyProject
 username=DOMAIN\username
 password=MySecurePassword
 ```
