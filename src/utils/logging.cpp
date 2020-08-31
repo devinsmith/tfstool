@@ -133,7 +133,7 @@ log_tmsg(int lvl, const char *fmt, ...)
 			    tm_now->tm_year + 1900, tm_now->tm_mon + 1, tm_now->tm_mday,
 			    tm_now->tm_hour, tm_now->tm_min, tm_now->tm_sec);
 			(void) vfprintf(stdout, fmt, ap);
-      fprintf(__LogFile, "\n");
+      fprintf(stdout, "\n");
 		}
 	}
 	va_end(ap);
