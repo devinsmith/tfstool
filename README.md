@@ -6,7 +6,7 @@ What is this?
 
 This is a tool that can interact with Microsoft TFS in a similar way that
 tf.exe can on Windows. In fact, if you are using Microsoft Windows you should
-stick with that tf.exe since it has a lot more features. We hope to provide a
+stick with tf.exe since it has a lot more features. We hope to provide a
 subset of that functionality on non-Microsoft systems.
 
 Requirements
