@@ -51,7 +51,7 @@ static void get_contents(const TfsProxy& tfs, const std::string& project, const 
 static void cmd_clone(const std::vector<std::string>& args)
 {
   if (args.size() < 1) {
-    fprintf(stderr, "You must specify an argument: tf get $/Folder1/Folder2/File.cs\n");
+    fprintf(stderr, "You must specify an argument: tf clone $/Folder1/Folder2/File.cs\n");
     return;
   }
 
