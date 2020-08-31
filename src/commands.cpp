@@ -48,7 +48,7 @@ static void get_contents(const TfsProxy& tfs, const std::string& project, const 
   }
 }
 
-static void cmd_get(const std::vector<std::string>& args)
+static void cmd_clone(const std::vector<std::string>& args)
 {
   if (args.size() < 1) {
     fprintf(stderr, "You must specify an argument: tf get $/Folder1/Folder2/File.cs\n");
@@ -75,7 +75,7 @@ struct cmd_operation {
 };
 
 cmd_operation operations[] = {
-  { "get", cmd_get },
+  { "clone", cmd_clone },
   { nullptr, nullptr }
 };
 

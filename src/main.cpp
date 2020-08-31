@@ -37,8 +37,7 @@ static void usage(int err)
   }
 
   fprintf(stderr, "usage: %s (cmd)\n", _pname);
-  fprintf(stderr, "\tget      - get latest.\n");
-  fprintf(stderr, "\tget [#]  - get specific changeset number.\n");
+  fprintf(stderr, "\tclone    - get latest.\n");
   exit(err);
 }
 

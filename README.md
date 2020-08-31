@@ -47,7 +47,7 @@ Usage
 Change to the directory you want to fetch contents from then simply execute:
 
 ```
-tf get $/SomeFolder/SubFolder
+tf clone $/SomeFolder/SubFolder
 ```
 
 And the directory structure and files will be pulled down from TFS into your current directly.
