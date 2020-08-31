@@ -65,7 +65,11 @@ public:
 
   void add_header(const char *key, const char *value);
   void set_cert(const std::string &cert, const std::string &key);
+
+  // Authorization schemes
+  void set_ntlm(const std::string &username, const std::string &password);
   void set_basic_auth(const std::string &user, const std::string &password);
+
   bool get_file(const char *file);
   bool get_file_fp(FILE *fp);
 

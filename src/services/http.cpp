@@ -328,6 +328,13 @@ HttpRequest::set_basic_auth(const std::string &user, const std::string &pass)
   curl_easy_setopt(m_handle, CURLOPT_PASSWORD, pass.c_str());
 }
 
+void HttpRequest::set_ntlm(const std::string &username, const std::string& password)
+{
+  curl_easy_setopt(m_handle, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+  curl_easy_setopt(m_handle, CURLOPT_USERNAME, username.c_str());
+  curl_easy_setopt(m_handle, CURLOPT_PASSWORD, password.c_str());
+}
+
 void
 HttpRequest::add_header(const char *key, const char *value)
 {
