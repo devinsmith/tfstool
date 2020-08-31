@@ -62,7 +62,7 @@ static void cmd_get(const std::vector<std::string>& args)
   if (args.size() > 1) {
     dest = args[1];
   }
-  TfsProxy tfs(AppConfig.Get("tfs", "base_url"), "asdfa",
+  TfsProxy tfs(AppConfig.Get("tfs", "base_url"), "unused",
       AppConfig.Get("tfs", "username"), AppConfig.Get("tfs", "password"));
   std::string project = AppConfig.Get("tfs", "default_project");
 
