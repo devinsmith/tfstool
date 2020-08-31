@@ -44,7 +44,7 @@ static void usage(int err)
 
 int main(int argc, char *argv[])
 {
-  int rc = AppConfig.Load(utils::get_config_path(".tfsrc"));
+  int rc = AppConfig.Load(filesys::get_config_path(".tfsrc"));
   if (rc == -1) {
     fprintf(stderr, "This program requires a configuration file. Please refer "
         "to the documentation on how to create a configuration file.\n");

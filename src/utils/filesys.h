@@ -24,10 +24,13 @@
 
 #include <string>
 
-namespace utils {
+namespace filesys {
 
 std::string get_home_directory();
 std::string get_config_path(const char *fname);
+
+void create_dir_then_change(const std::string& dir);
+void go_up();
 
 }
 

@@ -22,10 +22,51 @@
 #include <cstring>
 
 #include "commands.h"
+#include "configuration/configuration.h"
+#include "services/tfsproxy.h"
+#include "utils/filesys.h"
+
+static void get_contents(const TfsProxy& tfs, const std::string& project, const std::string& path)
+{
+  auto files = tfs.GetPathInfo(project, path);
+  for (const auto& file : files) {
+
+    if (!file.IsFolder) {
+      printf("Getting: %s\n", file.Path.c_str());
+      tfs.GetDirectFile(file.Url);
+      continue;
+    }
+
+    std::string::size_type last_slash = file.Path.rfind('/');
+    std::string dir_name;
+    if (last_slash != std::string::npos) {
+      dir_name = file.Path.substr(last_slash + 1);
+    }
+    filesys::create_dir_then_change(dir_name);
+    get_contents(tfs, project, file.Path);
+    filesys::go_up();
+  }
+}
 
 static void cmd_get(const std::vector<std::string>& args)
 {
-  printf("invoked get\n");
+  if (args.size() < 1) {
+    fprintf(stderr, "You must specify an argument: tf get $/Folder1/Folder2/File.cs\n");
+    return;
+  }
+
+  // Assume the first argument is the path we want to get, we will recursively
+  // iterate through that tree and fetch each file.
+  const std::string& path = args[0];
+  std::string dest;
+  if (args.size() > 1) {
+    dest = args[1];
+  }
+  TfsProxy tfs(AppConfig.Get("tfs", "base_url"), "asdfa",
+      AppConfig.Get("tfs", "username"), AppConfig.Get("tfs", "password"));
+  std::string project = AppConfig.Get("tfs", "default_project");
+
+  get_contents(tfs, project, path);
 }
 
 struct cmd_operation {

@@ -19,13 +19,20 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
+#ifdef _WIN32
+#include <direct.h>
+#include <windows.h>
+#else
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <errno.h>
 #include <pwd.h>
 #include <unistd.h>
-#include <sys/types.h>
+#endif
 
 #include "utils/filesys.h"
 
-namespace utils {
+namespace filesys {
 
 static const char PATH_SEPERATOR = '/';
 
@@ -44,6 +51,24 @@ std::string get_config_path(const char *fname)
   if (!home_path.empty() && home_path.back() != PATH_SEPERATOR)
     home_path += PATH_SEPERATOR;
   return home_path + fname;
+}
+
+void create_dir_then_change(const std::string& dir)
+{
+  int rc = access(dir.c_str(), 6);
+  if (rc == -1 && errno == ENOENT) {
+#ifdef _WIN32
+    mkdir(dir.c_str());
+#else
+    mkdir(dir.c_str(), 0700);
+#endif
+  }
+  chdir(dir.c_str());
+}
+
+void go_up()
+{
+  chdir("..");
 }
 
 } // namespace utils

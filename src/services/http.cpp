@@ -297,7 +297,7 @@ HttpRequest::get_file_fp(FILE *fp)
   curl_easy_setopt(m_handle, CURLOPT_WRITEFUNCTION, write_file);
   curl_easy_setopt(m_handle, CURLOPT_FOLLOWLOCATION, 1L);
 
-  CURLcode res = easy_perform(NULL, m_handle);
+  CURLcode res = easy_perform(HttpExecutor::default_instance().handle(), m_handle);
   if (res != CURLE_OK) {
     log_tmsg(0, "Failure performing request");
   }

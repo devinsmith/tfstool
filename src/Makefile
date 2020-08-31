@@ -3,7 +3,7 @@
 .PHONY: all clean
 
 SRCS = configuration/configuration.cpp configuration/ini.cpp commands.cpp \
-			 main.cpp services/http.cpp \
+			 main.cpp services/http.cpp services/tfsproxy.cpp \
 			 utils/cJSON.cpp utils/filesys.cpp utils/logging.cpp utils/web.cpp
 
 OBJS = $(SRCS:.cpp=.o)
