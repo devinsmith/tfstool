@@ -22,11 +22,6 @@
 #ifndef TFS_COMMANDS_INCLUDED
 #define TFS_COMMANDS_INCLUDED
 
-#include <string>
-#include <vector>
-
-
 bool execute_cmd(const char *cmd, char *argv[], int num_args);
-
 
 #endif // TFS_COMMANDS_INCLUDED
